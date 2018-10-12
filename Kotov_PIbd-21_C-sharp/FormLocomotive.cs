@@ -12,7 +12,7 @@ namespace Kotov_PIbd_21_C_sharp
 {
 	public partial class FormLocomotive : Form
 	{
-		private Locomotive locomotive;
+		private ITransport locomotive;
 
 		public FormLocomotive()
 		{
@@ -23,14 +23,14 @@ namespace Kotov_PIbd_21_C_sharp
 		{
 			Bitmap bmp = new Bitmap(pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
 			Graphics gr = Graphics.FromImage(bmp);
-			locomotive.DrawLocomotive(gr);
+			locomotive.DrawTransport(gr);
 			pictureBoxLocomotive.Image = bmp;
 		}
 
 		private void buttonCreate_Click(object sender, EventArgs e)
 		{
 			Random rnd = new Random();
-			locomotive = new Locomotive(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue, Color.Yellow);
+			locomotive = new Locomotive(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue);
 			locomotive.SetPosition(rnd.Next(30, 100), rnd.Next(30, 100), pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
 			Draw();
 		}
@@ -53,6 +53,14 @@ namespace Kotov_PIbd_21_C_sharp
 					locomotive.MoveTransport(Direction.Right);
 					break;
 			}
+			Draw();
+		}
+
+		private void buttonUpgrade_Click(object sender, EventArgs e)
+		{
+			Random rnd = new Random();
+			locomotive = new SteamLocomotiveWithBumper(rnd.Next(100, 300), rnd.Next(1000, 2000), Color.Blue, Color.Black, true, true);
+			locomotive.SetPosition(rnd.Next(30, 100), rnd.Next(300, 400), pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
 			Draw();
 		}
 	}
