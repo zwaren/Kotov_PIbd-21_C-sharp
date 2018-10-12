@@ -35,6 +35,7 @@
 			this.buttonDown = new System.Windows.Forms.Button();
 			this.buttonLeft = new System.Windows.Forms.Button();
 			this.buttonUp = new System.Windows.Forms.Button();
+			this.buttonUpgrade = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLocomotive)).BeginInit();
 			this.SuspendLayout();
 			// 
@@ -51,9 +52,9 @@
 			// 
 			this.buttonCreate.Location = new System.Drawing.Point(13, 13);
 			this.buttonCreate.Name = "buttonCreate";
-			this.buttonCreate.Size = new System.Drawing.Size(75, 23);
+			this.buttonCreate.Size = new System.Drawing.Size(116, 23);
 			this.buttonCreate.TabIndex = 1;
-			this.buttonCreate.Text = "Создать";
+			this.buttonCreate.Text = "Создать локомотив";
 			this.buttonCreate.UseVisualStyleBackColor = true;
 			this.buttonCreate.Click += new System.EventHandler(this.buttonCreate_Click);
 			// 
@@ -105,11 +106,22 @@
 			this.buttonUp.UseVisualStyleBackColor = true;
 			this.buttonUp.Click += new System.EventHandler(this.buttonMove_Click);
 			// 
+			// buttonUpgrade
+			// 
+			this.buttonUpgrade.Location = new System.Drawing.Point(136, 13);
+			this.buttonUpgrade.Name = "buttonUpgrade";
+			this.buttonUpgrade.Size = new System.Drawing.Size(164, 23);
+			this.buttonUpgrade.TabIndex = 6;
+			this.buttonUpgrade.Text = "Создать паровой локомотив";
+			this.buttonUpgrade.UseVisualStyleBackColor = true;
+			this.buttonUpgrade.Click += new System.EventHandler(this.buttonUpgrade_Click);
+			// 
 			// FormLocomotive
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.Controls.Add(this.buttonUpgrade);
 			this.Controls.Add(this.buttonUp);
 			this.Controls.Add(this.buttonLeft);
 			this.Controls.Add(this.buttonDown);
@@ -131,6 +143,7 @@
 		private System.Windows.Forms.Button buttonDown;
 		private System.Windows.Forms.Button buttonLeft;
 		private System.Windows.Forms.Button buttonUp;
+		private System.Windows.Forms.Button buttonUpgrade;
 	}
 }
 
