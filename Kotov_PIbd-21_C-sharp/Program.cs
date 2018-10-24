@@ -16,7 +16,7 @@ namespace Kotov_PIbd_21_C_sharp
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new FormLocomotive());
+			Application.Run(new FormDepo());
 		}
 	}
 }
