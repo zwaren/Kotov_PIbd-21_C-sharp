@@ -41,7 +41,7 @@ namespace Kotov_PIbd_21_C_sharp
 			}
 		}
 
-		private void buttonParkSteeamLoco_Click(object sender, EventArgs e)
+		private void buttonParkSteamLoco_Click(object sender, EventArgs e)
 		{
 			ColorDialog dialog = new ColorDialog();
 			if (dialog.ShowDialog() == DialogResult.OK)
