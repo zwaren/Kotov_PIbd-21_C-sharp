@@ -13,69 +13,99 @@ namespace Kotov_PIbd_21_C_sharp
 	public partial class FormDepo : Form
 	{
 
-		Depo<ITransport> depo;
+		MultiLevelDepo depo;
+		private const int countLevel = 5;
 
 		public FormDepo()
 		{
 			InitializeComponent();
-			depo = new Depo<ITransport>(20, pictureBoxDepo.Width, pictureBoxDepo.Height);
-			Draw();
+			depo = new MultiLevelDepo(countLevel, pictureBoxDepo.Width, pictureBoxDepo.Height);
+			for (int i = 0; i < countLevel; i++)
+			{
+				listBoxLevels.Items.Add("Уровень " + (i + 1));
+			}
+			listBoxLevels.SelectedIndex = 0;
 		}
 
 		private void Draw()
 		{
-			Bitmap bmp = new Bitmap(pictureBoxDepo.Width, pictureBoxDepo.Height);
-			Graphics gr = Graphics.FromImage(bmp);
-			depo.Draw(gr);
-			pictureBoxDepo.Image = bmp;
+			if (listBoxLevels.SelectedIndex > -1)
+			{
+				Bitmap bmp = new Bitmap(pictureBoxDepo.Width, pictureBoxDepo.Height);
+				Graphics gr = Graphics.FromImage(bmp);
+				depo[listBoxLevels.SelectedIndex].Draw(gr);
+				pictureBoxDepo.Image = bmp;
+			}
 		}
 
 		private void buttonParkLoco_Click(object sender, EventArgs e)
 		{
-			ColorDialog dialog = new ColorDialog();
-			if (dialog.ShowDialog() == DialogResult.OK)
+			if (listBoxLevels.SelectedIndex > -1)
 			{
-				var loco = new Locomotive(100, 1000, dialog.Color);
-				int place = depo + loco;
-				Draw();
+				ColorDialog dialog = new ColorDialog();
+				if (dialog.ShowDialog() == DialogResult.OK)
+				{
+					var loco = new Locomotive(100, 1000, dialog.Color);
+					int place = depo[listBoxLevels.SelectedIndex] + loco;
+					if (place == -1)
+					{
+						MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					}
+					Draw();
+				}
 			}
 		}
 
 		private void buttonParkSteamLoco_Click(object sender, EventArgs e)
 		{
-			ColorDialog dialog = new ColorDialog();
-			if (dialog.ShowDialog() == DialogResult.OK)
+			if (listBoxLevels.SelectedIndex > -1)
 			{
-				ColorDialog dialogDop = new ColorDialog();
-				if (dialogDop.ShowDialog() == DialogResult.OK)
+				ColorDialog dialog = new ColorDialog();
+				if (dialog.ShowDialog() == DialogResult.OK)
 				{
-					var loco = new SteamLocomotiveWithBumper(100, 1000, dialog.Color, dialogDop.Color, true, true);
-					int place = depo + loco;
-					Draw();
+					ColorDialog dialogDop = new ColorDialog();
+					if (dialogDop.ShowDialog() == DialogResult.OK)
+					{
+						var loco = new SteamLocomotiveWithBumper(100, 1000, dialog.Color, dialogDop.Color, true, true);
+						int place = depo[listBoxLevels.SelectedIndex] + loco;
+						if (place == -1)
+						{
+							MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						}
+						Draw();
+					}
 				}
 			}
 		}
 
 		private void buttonTake_Click(object sender, EventArgs e)
 		{
-			if (maskedTextBoxPlace.Text != "")
+			if (listBoxLevels.SelectedIndex > -1)
 			{
-				var loco = depo - Convert.ToInt32(maskedTextBoxPlace.Text);
-				if (loco != null)
+				if (maskedTextBoxPlace.Text != "")
 				{
-					Bitmap bmp = new Bitmap(pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
-					Graphics gr = Graphics.FromImage(bmp);
-					loco.SetPosition(5, 5, pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
-					loco.DrawTransport(gr);
-					pictureBoxLocomotive.Image = bmp;
+					var loco = depo[listBoxLevels.SelectedIndex] - Convert.ToInt32(maskedTextBoxPlace.Text);
+					if (loco != null)
+					{
+						Bitmap bmp = new Bitmap(pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
+						Graphics gr = Graphics.FromImage(bmp);
+						loco.SetPosition(5, 5, pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
+						loco.DrawTransport(gr);
+						pictureBoxLocomotive.Image = bmp;
+					}
+					else
+					{
+						Bitmap bmp = new Bitmap(pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
+						pictureBoxLocomotive.Image = bmp;
+					}
+					Draw();
 				}
-				else
-				{
-					Bitmap bmp = new Bitmap(pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
-					pictureBoxLocomotive.Image = bmp;
-				}
-				Draw();
 			}
+		}
+
+		private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			Draw();
 		}
 	}
 }

@@ -36,6 +36,7 @@
 			this.maskedTextBoxPlace = new System.Windows.Forms.MaskedTextBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.pictureBoxLocomotive = new System.Windows.Forms.PictureBox();
+			this.listBoxLevels = new System.Windows.Forms.ListBox();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxDepo)).BeginInit();
 			this.groupBox1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBoxLocomotive)).BeginInit();
@@ -51,7 +52,7 @@
 			// 
 			// buttonParkLoco
 			// 
-			this.buttonParkLoco.Location = new System.Drawing.Point(641, 13);
+			this.buttonParkLoco.Location = new System.Drawing.Point(641, 106);
 			this.buttonParkLoco.Name = "buttonParkLoco";
 			this.buttonParkLoco.Size = new System.Drawing.Size(131, 36);
 			this.buttonParkLoco.TabIndex = 1;
@@ -61,7 +62,7 @@
 			// 
 			// buttonParkSteamLoco
 			// 
-			this.buttonParkSteamLoco.Location = new System.Drawing.Point(641, 55);
+			this.buttonParkSteamLoco.Location = new System.Drawing.Point(641, 148);
 			this.buttonParkSteamLoco.Name = "buttonParkSteamLoco";
 			this.buttonParkSteamLoco.Size = new System.Drawing.Size(131, 37);
 			this.buttonParkSteamLoco.TabIndex = 2;
@@ -116,11 +117,21 @@
 			this.pictureBoxLocomotive.TabIndex = 0;
 			this.pictureBoxLocomotive.TabStop = false;
 			// 
+			// listBoxLevels
+			// 
+			this.listBoxLevels.FormattingEnabled = true;
+			this.listBoxLevels.Location = new System.Drawing.Point(642, 13);
+			this.listBoxLevels.Name = "listBoxLevels";
+			this.listBoxLevels.Size = new System.Drawing.Size(130, 82);
+			this.listBoxLevels.TabIndex = 4;
+			this.listBoxLevels.SelectedIndexChanged += new System.EventHandler(this.listBoxLevels_SelectedIndexChanged);
+			// 
 			// FormDepo
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(784, 411);
+			this.Controls.Add(this.listBoxLevels);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.buttonParkSteamLoco);
 			this.Controls.Add(this.buttonParkLoco);
@@ -145,5 +156,6 @@
 		private System.Windows.Forms.Button buttonTake;
 		private System.Windows.Forms.MaskedTextBox maskedTextBoxPlace;
 		private System.Windows.Forms.Label label1;
+		private System.Windows.Forms.ListBox listBoxLevels;
 	}
 }
