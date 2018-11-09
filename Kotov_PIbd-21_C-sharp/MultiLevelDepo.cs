@@ -9,7 +9,7 @@ namespace Kotov_PIbd_21_C_sharp
 	class MultiLevelDepo
 	{
 		List<Depo<ITransport>> depoStages;
-		private const int countPlaces = 20;
+		private const int countPlaces = 15;
 
 		public MultiLevelDepo(int countStages, int pictureWidth, int pictureHeight)
 		{

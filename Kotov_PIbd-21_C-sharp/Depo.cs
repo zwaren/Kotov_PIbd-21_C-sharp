@@ -19,7 +19,7 @@ namespace Kotov_PIbd_21_C_sharp
 		public Depo(int sizes, int pictureWidth, int pictureHeight)
 		{
 			_maxCount = sizes;
-			_places = new Dictionary<int, T>(sizes);
+			_places = new Dictionary<int, T>();
 			PictureWidth = pictureWidth;
 			PictureHeight = pictureHeight;
 		}
@@ -65,7 +65,7 @@ namespace Kotov_PIbd_21_C_sharp
 			var keys = _places.Keys.ToList();
 			for (int i = 0; i < keys.Count; i++)
 			{
-				_places[i].DrawTransport(g);
+				_places[keys[i]].DrawTransport(g);
 			}
 		}
 
@@ -75,25 +75,12 @@ namespace Kotov_PIbd_21_C_sharp
 			g.DrawRectangle(pen, 0, 0, (_maxCount / 5) * _placeSizeWidth, 480);
 			for (int i = 0; i < _maxCount / 5; i++)
 			{
-				for (int j = 0; j < 6; ++j)
+				for (int j = 1; j < 6; ++j)
 				{
 					g.DrawLine(pen, i * _placeSizeWidth, j * _placeSizeHeight,
 					i * _placeSizeWidth + 110, j * _placeSizeHeight);
 				}
 				g.DrawLine(pen, i * _placeSizeWidth, 0, i * _placeSizeWidth, 400);
-			}
-		}
-
-		public T this[int index]
-		{
-			get
-			{
-				if (_places.ContainsKey(index))
-				{
-					return _places[index];
-				}
-				return null;
-
 			}
 		}
 	}

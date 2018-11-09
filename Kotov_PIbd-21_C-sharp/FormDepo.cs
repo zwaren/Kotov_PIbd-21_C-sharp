@@ -18,7 +18,8 @@ namespace Kotov_PIbd_21_C_sharp
 
 		public FormDepo()
 		{
-			InitializeComponent(); depo = new MultiLevelDepo(countLevel, pictureBoxDepo.Width, pictureBoxDepo.Height);
+			InitializeComponent();
+			depo = new MultiLevelDepo(countLevel, pictureBoxDepo.Width, pictureBoxDepo.Height);
 			for (int i = 0; i < countLevel; i++)
 			{
 				listBoxLevels.Items.Add("Уровень " + (i + 1));
@@ -28,7 +29,7 @@ namespace Kotov_PIbd_21_C_sharp
 
 		private void Draw()
 		{
-			if(listBoxLevels.SelectedIndex > -1)
+			if (listBoxLevels.SelectedIndex > -1)
 			{
 				Bitmap bmp = new Bitmap(pictureBoxDepo.Width, pictureBoxDepo.Height);
 				Graphics gr = Graphics.FromImage(bmp);
