@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Kotov_PIbd_21_C_sharp
 {
-	class Locomotive : Train
+	public class Locomotive : Train
 	{
 		private const int locomotiveWidth = 100;
 		private const int locomotiveHeight = 60;
-		
+
 		public Locomotive(int maxSpeed, float weight, Color mainColor)
 		{
 			MaxSpeed = maxSpeed;
 			Weight = weight;
 			MainColor = mainColor;
 		}
-		
+
 		public override void MoveTransport(Direction direction)
 		{
 			float step = MaxSpeed * 100 / Weight;

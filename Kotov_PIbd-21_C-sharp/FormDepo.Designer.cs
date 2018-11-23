@@ -29,8 +29,7 @@
 		private void InitializeComponent()
 		{
 			this.pictureBoxDepo = new System.Windows.Forms.PictureBox();
-			this.buttonParkLoco = new System.Windows.Forms.Button();
-			this.buttonParkSteamLoco = new System.Windows.Forms.Button();
+			this.buttonSetLoco = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.buttonTake = new System.Windows.Forms.Button();
 			this.maskedTextBoxPlace = new System.Windows.Forms.MaskedTextBox();
@@ -50,25 +49,15 @@
 			this.pictureBoxDepo.TabIndex = 0;
 			this.pictureBoxDepo.TabStop = false;
 			// 
-			// buttonParkLoco
+			// buttonSetLoco
 			// 
-			this.buttonParkLoco.Location = new System.Drawing.Point(641, 106);
-			this.buttonParkLoco.Name = "buttonParkLoco";
-			this.buttonParkLoco.Size = new System.Drawing.Size(131, 36);
-			this.buttonParkLoco.TabIndex = 1;
-			this.buttonParkLoco.Text = "Припарковать локомотив";
-			this.buttonParkLoco.UseVisualStyleBackColor = true;
-			this.buttonParkLoco.Click += new System.EventHandler(this.buttonParkLoco_Click);
-			// 
-			// buttonParkSteamLoco
-			// 
-			this.buttonParkSteamLoco.Location = new System.Drawing.Point(641, 148);
-			this.buttonParkSteamLoco.Name = "buttonParkSteamLoco";
-			this.buttonParkSteamLoco.Size = new System.Drawing.Size(131, 37);
-			this.buttonParkSteamLoco.TabIndex = 2;
-			this.buttonParkSteamLoco.Text = "Припарковать паровой локомотив";
-			this.buttonParkSteamLoco.UseVisualStyleBackColor = true;
-			this.buttonParkSteamLoco.Click += new System.EventHandler(this.buttonParkSteamLoco_Click);
+			this.buttonSetLoco.Location = new System.Drawing.Point(641, 106);
+			this.buttonSetLoco.Name = "buttonSetLoco";
+			this.buttonSetLoco.Size = new System.Drawing.Size(131, 36);
+			this.buttonSetLoco.TabIndex = 1;
+			this.buttonSetLoco.Text = "Добавить локомотив";
+			this.buttonSetLoco.UseVisualStyleBackColor = true;
+			this.buttonSetLoco.Click += new System.EventHandler(this.buttonSetLoco_Click);
 			// 
 			// groupBox1
 			// 
@@ -133,8 +122,7 @@
 			this.ClientSize = new System.Drawing.Size(784, 411);
 			this.Controls.Add(this.listBoxLevels);
 			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.buttonParkSteamLoco);
-			this.Controls.Add(this.buttonParkLoco);
+			this.Controls.Add(this.buttonSetLoco);
 			this.Controls.Add(this.pictureBoxDepo);
 			this.Name = "FormDepo";
 			this.Text = "Депо";
@@ -149,8 +137,7 @@
 		#endregion
 
 		private System.Windows.Forms.PictureBox pictureBoxDepo;
-		private System.Windows.Forms.Button buttonParkLoco;
-		private System.Windows.Forms.Button buttonParkSteamLoco;
+		private System.Windows.Forms.Button buttonSetLoco;
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.PictureBox pictureBoxLocomotive;
 		private System.Windows.Forms.Button buttonTake;

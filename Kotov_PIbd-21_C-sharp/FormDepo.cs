@@ -14,6 +14,9 @@ namespace Kotov_PIbd_21_C_sharp
 	{
 
 		MultiLevelDepo depo;
+
+		FormLocomotiveConfig form;
+
 		private const int countLevel = 5;
 
 		public FormDepo()
@@ -35,46 +38,6 @@ namespace Kotov_PIbd_21_C_sharp
 				Graphics gr = Graphics.FromImage(bmp);
 				depo[listBoxLevels.SelectedIndex].Draw(gr);
 				pictureBoxDepo.Image = bmp;
-			}
-		}
-
-		private void buttonParkLoco_Click(object sender, EventArgs e)
-		{
-			if (listBoxLevels.SelectedIndex > -1)
-			{
-				ColorDialog dialog = new ColorDialog();
-				if (dialog.ShowDialog() == DialogResult.OK)
-				{
-					var loco = new Locomotive(100, 1000, dialog.Color);
-					int place = depo[listBoxLevels.SelectedIndex] + loco;
-					if (place == -1)
-					{
-						MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
-					Draw();
-				}
-			}
-		}
-
-		private void buttonParkSteamLoco_Click(object sender, EventArgs e)
-		{
-			if (listBoxLevels.SelectedIndex > -1)
-			{
-				ColorDialog dialog = new ColorDialog();
-				if (dialog.ShowDialog() == DialogResult.OK)
-				{
-					ColorDialog dialogDop = new ColorDialog();
-					if (dialogDop.ShowDialog() == DialogResult.OK)
-					{
-						var loco = new SteamLocomotiveWithBumper(100, 1000, dialog.Color, dialogDop.Color, true, true);
-						int place = depo[listBoxLevels.SelectedIndex] + loco;
-						if (place == -1)
-						{
-							MessageBox.Show("Нет свободных мест", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-						}
-						Draw();
-					}
-				}
 			}
 		}
 
@@ -106,6 +69,29 @@ namespace Kotov_PIbd_21_C_sharp
 		private void listBoxLevels_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			Draw();
+		}
+
+		private void buttonSetLoco_Click(object sender, EventArgs e)
+		{
+			form = new FormLocomotiveConfig();
+			form.AddEvent(AddLoco);
+			form.Show();
+		}
+
+		private void AddLoco(ITransport loco)
+		{
+			if (loco != null && listBoxLevels.SelectedIndex > -1)
+			{
+				int place = depo[listBoxLevels.SelectedIndex] + loco;
+				if (place > -1)
+				{
+					Draw();
+				}
+				else
+				{
+					MessageBox.Show("Локомотив не удалось поставить");
+				}
+			}
 		}
 	}
 }

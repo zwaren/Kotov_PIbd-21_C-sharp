@@ -6,6 +6,8 @@ using System.Windows.Forms;
 
 namespace Kotov_PIbd_21_C_sharp
 {
+	public delegate void locoDelegate(ITransport loco);
+
 	static class Program
 	{
 		/// <summary>
