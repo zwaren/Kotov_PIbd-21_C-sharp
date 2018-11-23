@@ -27,6 +27,20 @@ namespace Kotov_PIbd_21_C_sharp
 			this.haveSteamEngine = haveSteamEngine;
 		}
 
+		public SteamLocomotiveWithBumper(string info) : base(info)
+		{
+			string[] strs = info.Split(';');
+			if (strs.Length == 6)
+			{
+				MaxSpeed = Convert.ToInt32(strs[0]);
+				Weight = Convert.ToInt32(strs[1]);
+				MainColor = Color.FromName(strs[2]);
+				extraColor = Color.FromName(strs[3]);
+				haveBumper = Convert.ToBoolean(strs[4]);
+				haveSteamEngine = Convert.ToBoolean(strs[5]);
+			}
+		}
+
 		public override void DrawTransport(Graphics g)
 		{
 			base.DrawTransport(g);
@@ -44,6 +58,11 @@ namespace Kotov_PIbd_21_C_sharp
 		public void SetDopColor(Color color)
 		{
 			extraColor = color;
+		}
+
+		public override string ToString()
+		{
+			return base.ToString() + ";" + extraColor.Name + ";" + haveBumper + ";" + haveSteamEngine;
 		}
 	}
 }

@@ -19,6 +19,17 @@ namespace Kotov_PIbd_21_C_sharp
 			MainColor = mainColor;
 		}
 
+		public Locomotive(string info)
+		{
+			string[] strs = info.Split(';');
+			if (strs.Length == 3)
+			{
+				MaxSpeed = Convert.ToInt32(strs[0]);
+				Weight = Convert.ToInt32(strs[1]);
+				MainColor = Color.FromName(strs[2]);
+			}
+		}
+
 		public override void MoveTransport(Direction direction)
 		{
 			float step = MaxSpeed * 100 / Weight;
@@ -68,6 +79,11 @@ namespace Kotov_PIbd_21_C_sharp
 			g.FillEllipse(bl, _startPosX + 80, _startPosY + 35, 10, 10);
 			g.FillEllipse(bg, _startPosX, _startPosY + 5, 100, 10);
 			g.FillRectangle(bl, _startPosX - 5, _startPosY + 36, 110, 5);
+		}
+
+		public override string ToString()
+		{
+			return MaxSpeed + ";" + Weight + ";" + MainColor.Name;
 		}
 	}
 }
