@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kotov_PIbd_21_C_sharp
 {
-	abstract class Train : ITransport
+	public abstract class Train : ITransport
 	{
 		protected float _startPosX;
 		protected float _startPosY;
@@ -21,6 +21,11 @@ namespace Kotov_PIbd_21_C_sharp
 		public abstract void DrawTransport(Graphics g);
 
 		public abstract void MoveTransport(Direction direction);
+
+		public void SetMainColor(Color color)
+		{
+			MainColor = color;
+		}
 
 		public void SetPosition(int x, int y, int width, int height)
 		{

@@ -60,6 +60,12 @@
     <Compile Include="FormLocomotive.Designer.cs">
       <DependentUpon>FormLocomotive.cs</DependentUpon>
     </Compile>
+    <Compile Include="FormLocomotiveConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormLocomotiveConfig.Designer.cs">
+      <DependentUpon>FormLocomotiveConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="ITransport.cs" />
     <Compile Include="Locomotive.cs" />
     <Compile Include="MultiLevelDepo.cs" />

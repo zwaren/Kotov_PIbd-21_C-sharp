@@ -7,18 +7,18 @@ using System.Threading.Tasks;
 
 namespace Kotov_PIbd_21_C_sharp
 {
-	class SteamLocomotiveWithBumper : Locomotive
+	public class SteamLocomotiveWithBumper : Locomotive
 	{
 		private bool haveBumper;
 		private bool haveSteamEngine;
 		private Color extraColor;
 
 		public SteamLocomotiveWithBumper(
-			int maxSpeed, 
-			float weight, 
-			Color mainColor, 
-			Color extraColor, 
-			bool haveBumper, 
+			int maxSpeed,
+			float weight,
+			Color mainColor,
+			Color extraColor,
+			bool haveBumper,
 			bool haveSteamEngine
 			) : base(maxSpeed, weight, mainColor)
 		{
@@ -40,6 +40,10 @@ namespace Kotov_PIbd_21_C_sharp
 				g.FillRectangle(bl, _startPosX + 70, _startPosY - 10, 7, 17);
 			}
 		}
-		
+
+		public void SetDopColor(Color color)
+		{
+			extraColor = color;
+		}
 	}
 }

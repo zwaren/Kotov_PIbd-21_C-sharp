@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Kotov_PIbd_21_C_sharp
 {
-	enum Direction
+	public enum Direction
 	{
 		Up,
 		Down,

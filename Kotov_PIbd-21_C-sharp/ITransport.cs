@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Kotov_PIbd_21_C_sharp
 {
-	interface ITransport
+	public interface ITransport
 	{
 		void SetPosition(int x, int y, int width, int height);
 		void MoveTransport(Direction direction);
 		void DrawTransport(Graphics g);
+		void SetMainColor(Color color);
 	}
 }
