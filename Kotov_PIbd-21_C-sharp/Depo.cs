@@ -28,7 +28,7 @@ namespace Kotov_PIbd_21_C_sharp
 		{
 			if (p._places.Count == p._maxCount)
 			{
-				return -1;
+				throw new DepoOverflowException();
 			}
 			for (int i = 0; i < p._maxCount; i++)
 			{
@@ -51,7 +51,7 @@ namespace Kotov_PIbd_21_C_sharp
 				p._places.Remove(index);
 				return loco;
 			}
-			return null;
+			throw new DepoNotFoundException(index);
 		}
 
 		private bool CheckFreePlace(int index)
@@ -92,15 +92,19 @@ namespace Kotov_PIbd_21_C_sharp
 				{
 					return _places[ind];
 				}
-				return null;
+				throw new DepoNotFoundException(ind);
 			}
 			set
 			{
 				if (CheckFreePlace(ind))
 				{
 					_places.Add(ind, value);
-					_places[ind].SetPosition(5 + ind / 5 * _placeSizeWidth + 5, ind % 5 * 
+					_places[ind].SetPosition(5 + ind / 5 * _placeSizeWidth + 5, ind % 5 *
 						_placeSizeHeight + 15, PictureWidth, PictureHeight);
+				}
+				else
+				{
+					throw new DepoOccupiedPlaceException(ind);
 				}
 			}
 		}
