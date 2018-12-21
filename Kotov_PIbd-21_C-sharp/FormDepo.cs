@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NLog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,16 +13,15 @@ namespace Kotov_PIbd_21_C_sharp
 {
 	public partial class FormDepo : Form
 	{
-
 		MultiLevelDepo depo;
-
 		FormLocomotiveConfig form;
-
 		private const int countLevel = 5;
+		private Logger logger;
 
 		public FormDepo()
 		{
 			InitializeComponent();
+			logger = LogManager.GetCurrentClassLogger();
 			depo = new MultiLevelDepo(countLevel, pictureBoxDepo.Width, pictureBoxDepo.Height);
 			for (int i = 0; i < countLevel; i++)
 			{
@@ -47,21 +47,28 @@ namespace Kotov_PIbd_21_C_sharp
 			{
 				if (maskedTextBoxPlace.Text != "")
 				{
-					var loco = depo[listBoxLevels.SelectedIndex] - Convert.ToInt32(maskedTextBoxPlace.Text);
-					if (loco != null)
+					try
 					{
+						var loco = depo[listBoxLevels.SelectedIndex] - Convert.ToInt32(maskedTextBoxPlace.Text);
 						Bitmap bmp = new Bitmap(pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
 						Graphics gr = Graphics.FromImage(bmp);
 						loco.SetPosition(5, 5, pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
 						loco.DrawTransport(gr);
 						pictureBoxLocomotive.Image = bmp;
+						Draw();
 					}
-					else
+					catch (DepoNotFoundException ex)
 					{
+						MessageBox.Show(ex.Message, "Не найдено", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						logger.Error(ex.Message);
 						Bitmap bmp = new Bitmap(pictureBoxLocomotive.Width, pictureBoxLocomotive.Height);
 						pictureBoxLocomotive.Image = bmp;
 					}
-					Draw();
+					catch (Exception ex)
+					{
+						MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+						logger.Error(ex.Message);
+					}
 				}
 			}
 		}
@@ -82,31 +89,41 @@ namespace Kotov_PIbd_21_C_sharp
 		{
 			if (loco != null && listBoxLevels.SelectedIndex > -1)
 			{
-				int place = depo[listBoxLevels.SelectedIndex] + loco;
-				if (place > -1)
+				try
 				{
+					int place = depo[listBoxLevels.SelectedIndex] + loco;
+					logger.Info("Добавлен локомотив " + loco.ToString() + " на место " + place);
 					Draw();
 				}
-				else
+				catch (DepoOverflowException ex)
 				{
-					MessageBox.Show("Локомотив не удалось поставить");
+					MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					logger.Error(ex.Message);
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					logger.Error(ex.Message);
 				}
 			}
+
 		}
 
 		private void сохранитьToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (saveFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				if (depo.SaveData(saveFileDialog.FileName))
+				try
 				{
+					depo.SaveData(saveFileDialog.FileName);
 					MessageBox.Show("Сохранение прошло успешно", "Результат",
 					MessageBoxButtons.OK, MessageBoxIcon.Information);
+					logger.Info("Сохранено в файл " + saveFileDialog.FileName);
 				}
-				else
+				catch (Exception ex)
 				{
-					MessageBox.Show("Не сохранилось", "Результат", MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
+					MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					logger.Error(ex.Message);
 				}
 			}
 		}
@@ -115,15 +132,21 @@ namespace Kotov_PIbd_21_C_sharp
 		{
 			if (openFileDialog.ShowDialog() == DialogResult.OK)
 			{
-				if (depo.LoadData(openFileDialog.FileName))
+				try
 				{
-					MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK,
-					MessageBoxIcon.Information);
+					depo.LoadData(openFileDialog.FileName);
+					MessageBox.Show("Загрузили", "Результат", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					logger.Info("Загружено из файла " + openFileDialog.FileName);
 				}
-				else
+				catch (DepoOccupiedPlaceException ex)
 				{
-					MessageBox.Show("Не загрузили", "Результат", MessageBoxButtons.OK,
-					MessageBoxIcon.Error);
+					MessageBox.Show(ex.Message, "Занятое место", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					logger.Error(ex.Message);
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message, "Неизвестная ошибка при сохранении", MessageBoxButtons.OK, MessageBoxIcon.Error);
+					logger.Error(ex.Message);
 				}
 				Draw();
 			}

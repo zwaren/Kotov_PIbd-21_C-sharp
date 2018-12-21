@@ -37,7 +37,7 @@ namespace Kotov_PIbd_21_C_sharp
 			}
 		}
 
-		public bool SaveData(string filename)
+		public void SaveData(string filename)
 		{
 			if (File.Exists(filename))
 			{
@@ -54,9 +54,9 @@ namespace Kotov_PIbd_21_C_sharp
 						WriteToFile("Level" + Environment.NewLine, fs);
 						for (int i = 0; i < countPlaces; i++)
 						{
-							var loco = level[i];
-							if (loco != null)
+							try
 							{
+								var loco = level[i];
 								if (loco.GetType().Name == "Locomotive")
 								{
 									WriteToFile(i + ":Locomotive:", fs);
@@ -67,11 +67,15 @@ namespace Kotov_PIbd_21_C_sharp
 								}
 								WriteToFile(loco + Environment.NewLine, fs);
 							}
+							catch (DepoNotFoundException e)
+							{
+								continue;
+							}
+							finally { }
 						}
 					}
 				}
 			}
-			return true;
 		}
 
 		private void WriteToFile(string text, FileStream stream)
@@ -80,12 +84,11 @@ namespace Kotov_PIbd_21_C_sharp
 			stream.Write(info, 0, info.Length);
 		}
 
-
-		public bool LoadData(string filename)
+		public void LoadData(string filename)
 		{
 			if (!File.Exists(filename))
 			{
-				return false;
+				throw new FileNotFoundException();
 			}
 			string bufferTextFromFile = "";
 			using (FileStream fs = new FileStream(filename, FileMode.Open))
@@ -113,7 +116,7 @@ namespace Kotov_PIbd_21_C_sharp
 			}
 			else
 			{
-				return false;
+				throw new Exception("Неверный формат файла");
 			}
 			int counter = -1;
 			ITransport loco = null;
@@ -140,7 +143,6 @@ namespace Kotov_PIbd_21_C_sharp
 				}
 				depoStages[counter][Convert.ToInt32(strs[i].Split(':')[0])] = loco;
 			}
-			return true;
 		}
 	}
 }
