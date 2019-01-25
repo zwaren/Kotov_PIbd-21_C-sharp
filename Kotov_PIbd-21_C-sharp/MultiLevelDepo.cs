@@ -52,26 +52,17 @@ namespace Kotov_PIbd_21_C_sharp
 					foreach (var level in depoStages)
 					{
 						WriteToFile("Level" + Environment.NewLine, fs);
-						for (int i = 0; i < countPlaces; i++)
+						foreach (var loco in level)
 						{
-							try
+							if (loco.GetType().Name == "Locomotive")
 							{
-								var loco = level[i];
-								if (loco.GetType().Name == "Locomotive")
-								{
-									WriteToFile(i + ":Locomotive:", fs);
-								}
-								if (loco.GetType().Name == "SteamLocomotiveWithBumper")
-								{
-									WriteToFile(i + ":SteamLocomotiveWithBumper:", fs);
-								}
-								WriteToFile(loco + Environment.NewLine, fs);
+								WriteToFile(level.GetKey + ":Locomotive:", fs);
 							}
-							catch (DepoNotFoundException e)
+							if (loco.GetType().Name == "SteamLocomotiveWithBumper")
 							{
-								continue;
+								WriteToFile(level.GetKey + ":SteamLocomotiveWithBumper:", fs);
 							}
-							finally { }
+							WriteToFile(loco + Environment.NewLine, fs);
 						}
 					}
 				}
@@ -143,6 +134,11 @@ namespace Kotov_PIbd_21_C_sharp
 				}
 				depoStages[counter][Convert.ToInt32(strs[i].Split(':')[0])] = loco;
 			}
+		}
+
+		public void Sort()
+		{
+			depoStages.Sort();
 		}
 	}
 }

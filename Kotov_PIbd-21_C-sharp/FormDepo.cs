@@ -100,6 +100,10 @@ namespace Kotov_PIbd_21_C_sharp
 					MessageBox.Show(ex.Message, "Переполнение", MessageBoxButtons.OK, MessageBoxIcon.Error);
 					logger.Error(ex.Message);
 				}
+				catch (DepoAlreadyHaveException ex)
+				{
+					MessageBox.Show(ex.Message, "Дублирование", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
 				catch (Exception ex)
 				{
 					MessageBox.Show(ex.Message, "Неизвестная ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -150,6 +154,13 @@ namespace Kotov_PIbd_21_C_sharp
 				}
 				Draw();
 			}
+		}
+
+		private void buttonSort_Click(object sender, EventArgs e)
+		{
+			depo.Sort();
+			Draw();
+			logger.Info("Сортировка уровней");
 		}
 	}
 }
