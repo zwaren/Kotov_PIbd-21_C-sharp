@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Kotov_PIbd_21_C_sharp
 {
-	public class SteamLocomotiveWithBumper : Locomotive
+	public class SteamLocomotiveWithBumper : Locomotive, IComparable<SteamLocomotiveWithBumper>, IEquatable<SteamLocomotiveWithBumper>
 	{
 		private bool haveBumper;
 		private bool haveSteamEngine;
@@ -63,6 +63,76 @@ namespace Kotov_PIbd_21_C_sharp
 		public override string ToString()
 		{
 			return base.ToString() + ";" + extraColor.Name + ";" + haveBumper + ";" + haveSteamEngine;
+		}
+
+		public int CompareTo(SteamLocomotiveWithBumper other)
+		{
+			var res = (this as Locomotive).CompareTo(other as Locomotive);
+			if (res != 0)
+			{
+				return res;
+			}
+			if (extraColor != other.extraColor)
+			{
+				extraColor.Name.CompareTo(other.extraColor.Name);
+			}
+			if (haveBumper != other.haveBumper)
+			{
+				return haveBumper.CompareTo(other.haveBumper);
+			}
+			if (haveSteamEngine != other.haveSteamEngine)
+			{
+				return haveSteamEngine.CompareTo(other.haveSteamEngine);
+			}
+			return 0;
+		}
+
+		public bool Equals(SteamLocomotiveWithBumper other)
+		{
+			var res = (this as Locomotive).Equals(other as Locomotive);
+			if (!res)
+			{
+				return res;
+			}
+			if (GetType().Name != other.GetType().Name)
+			{
+				return false;
+			}
+			if (extraColor != other.extraColor)
+			{
+				return false;
+			}
+			if (haveBumper != other.haveBumper)
+			{
+				return false;
+			}
+			if (haveSteamEngine != other.haveSteamEngine)
+			{
+				return false;
+			}
+			return true;
+		}
+
+		public override bool Equals(Object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+			SteamLocomotiveWithBumper locoObj = obj as SteamLocomotiveWithBumper;
+			if (locoObj == null)
+			{
+				return false;
+			}
+			else
+			{
+				return Equals(locoObj);
+			}
+		}
+
+		public override int GetHashCode()
+		{
+			return base.GetHashCode();
 		}
 	}
 }

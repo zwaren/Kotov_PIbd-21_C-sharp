@@ -55,6 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Depo.cs" />
+    <Compile Include="DepoAlreadyHaveException.cs" />
     <Compile Include="DepoNotFoundException.cs" />
     <Compile Include="DepoOccupiedPlaceException.cs" />
     <Compile Include="DepoOverflowException.cs" />

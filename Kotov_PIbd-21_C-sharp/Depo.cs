@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -7,7 +8,8 @@ using System.Threading.Tasks;
 
 namespace Kotov_PIbd_21_C_sharp
 {
-	class Depo<T> where T : class, ITransport
+	class Depo<T> : IEnumerator<T>, IEnumerable<T>, IComparable<Depo<T>>
+		where T : class, ITransport
 	{
 		private Dictionary<int, T> _places;
 		private int _maxCount;
@@ -15,6 +17,7 @@ namespace Kotov_PIbd_21_C_sharp
 		private int PictureHeight { get; set; }
 		private int _placeSizeWidth = 210;
 		private int _placeSizeHeight = 80;
+		private int _currentIndex;
 
 		public Depo(int sizes, int pictureWidth, int pictureHeight)
 		{
@@ -29,6 +32,10 @@ namespace Kotov_PIbd_21_C_sharp
 			if (p._places.Count == p._maxCount)
 			{
 				throw new DepoOverflowException();
+			}
+			if (p._places.ContainsValue(loco))
+			{
+				throw new DepoAlreadyHaveException();
 			}
 			for (int i = 0; i < p._maxCount; i++)
 			{
@@ -108,5 +115,80 @@ namespace Kotov_PIbd_21_C_sharp
 				}
 			}
 		}
+
+		public T Current => _places[GetKey];
+
+		public int GetKey => _places.Keys.ToList()[_currentIndex];
+
+		object IEnumerator.Current => Current;
+
+		public void Dispose()
+		{
+			_places.Clear();
+		}
+
+		public bool MoveNext()
+		{
+			if (_currentIndex + 1 >= _places.Count)
+			{
+				Reset();
+				return false;
+			}
+			_currentIndex++;
+			return true;
+		}
+
+		public void Reset()
+		{
+			_currentIndex = -1;
+		}
+
+		public IEnumerator<T> GetEnumerator()
+		{
+			return this;
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return GetEnumerator();
+		}
+
+		public int CompareTo(Depo<T> other)
+		{
+			if (_places.Count > other._places.Count)
+			{
+				return -1;
+			}
+			else if (_places.Count < other._places.Count)
+			{
+				return 1;
+			}
+			else if (_places.Count > 0)
+			{
+				var thisKeys = _places.Keys.ToList();
+				var otherKeys = other._places.Keys.ToList();
+				for (int i = 0; i < _places.Count; ++i)
+				{
+					if (_places[thisKeys[i]] is SteamLocomotiveWithBumper && other._places[otherKeys[i]] is Locomotive)
+					{
+						return 1;
+					}
+					if (_places[thisKeys[i]] is Locomotive && other._places[otherKeys[i]] is SteamLocomotiveWithBumper)
+					{
+						return -1;
+					}
+					if (_places[thisKeys[i]] is SteamLocomotiveWithBumper && other._places[otherKeys[i]] is SteamLocomotiveWithBumper)
+					{
+						return (_places[thisKeys[i]] as SteamLocomotiveWithBumper).CompareTo(other._places[otherKeys[i]] as SteamLocomotiveWithBumper);
+					}
+					if (_places[thisKeys[i]] is Locomotive && other._places[otherKeys[i]] is Locomotive)
+					{
+						return (_places[thisKeys[i]] as Locomotive).CompareTo(other._places[otherKeys[i]] as Locomotive);
+					}
+				}
+			}
+			return 0;
+		}
+
 	}
 }
